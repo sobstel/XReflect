@@ -1,0 +1,190 @@
+# XReflect schema - http://segfaultlabs.com/XReflect/
+# Copyright (c) Przemek Sobstel (http://sobstel.org)
+# Licensed under MIT (http://segfaultlabs.com/papers/licenses/mit/)
+# $Id: $
+
+
+#
+# namespaces
+#
+
+default namespace = "http://segfaultlabs.com/XReflect/"
+
+
+#
+# root
+#
+
+start = xreflect
+
+xreflect = element xreflect { class* & interface* }
+
+
+#
+# major elements
+#
+
+class = element class {    
+	modifier.abstract? &	
+	modifier.final? &
+	name &	
+	element implements { attribute userDefined { xsd:boolean }? & text }* &		
+	element extends { attribute userDefined { xsd:boolean }? & text }? &
+	constants? &
+	properties? &	
+	methods? &	
+	summary? &
+	desc? &
+	file? &	
+	category? &
+	package? &
+	subpackage? &	
+	version? &
+	deprecated? &
+	since? &	
+	authors? &
+	copyright? &
+	license? &
+	internal* &
+	link* &
+	unknownTag*
+}
+
+interface = element interface {
+	name &	
+	constants? &
+	methods? &
+	summary? &
+	desc? &
+	file? &	
+	category? &
+	package? &
+	subpackage? &	
+	version? &
+	deprecated? &
+	since? &	
+	authors? &
+	copyright? &
+	license? &
+	internal* &
+	link* &
+	unknownTag*	
+}
+
+
+#
+# major subelements
+#
+
+constants = element constants {
+	constant*
+}
+
+constant = element constant {
+	name &
+	value &
+	summary? &
+	desc?
+}
+
+methods = element methods {
+	method*
+}
+
+method = element method {
+	modifier.abstract? &	
+	modifier.final? &
+	modifier.static? &
+	modifier.access &
+	attribute returnsReference { xsd:boolean }? &
+	name &
+	params? &
+	element return { type & summary? }? &
+	element throws { name & summary? }* &	
+	summary? &
+	desc? &
+	file? &	
+	deprecated? &
+	since? &
+	authors? &	
+	internal* &
+	link* &
+	unknownTag*
+}
+
+params = element params {
+	param*
+}
+
+param = element param {
+	attribute passedByReference { xsd:boolean }? &	
+	name &
+	type? &
+	value? &
+	summary?
+}
+
+properties = element properties {
+	property*
+}
+
+property = element property {
+	modifier.static? &
+	modifier.access &
+	name & 
+	type? &
+	value? &
+	summary? &
+	desc? &
+	deprecated? &
+	since? &
+	internal* &
+	link* &
+	unknownTag*
+}
+
+
+#
+# minor elements
+#
+
+file = element file { element fileName { text }? & element startLine { xsd:positiveInteger }? &  element endLine { xsd:positiveInteger }? }
+link = element link { attribute uri { text } & text? }
+name = element name { text }
+type = element type { "mixed" | "bool" | "int" | "float" | "string" | "array" | "resource" | text }?
+value = element value { text }?
+
+
+#
+# modifiers
+#
+
+modifier.abstract = attribute abstract { xsd:boolean }
+modifier.access = attribute access { "public" | "protected" | "private" }
+modifier.final = attribute final { xsd:boolean }
+modifier.static = attribute static { xsd:boolean }
+
+
+#
+# doc comments
+#
+
+unknownTag = attribute tag { text } & value?
+
+summary = element summary { text }
+desc = element desc { text }
+
+category = element category { text }
+package = element package { text }
+subpackage = element subpackage { text }
+
+author = element author { name & element email { text }? & www? }
+authors = element authors { author* }
+copyright = element copyright { text }
+license = element license { text | link? }
+
+version = element version { text }
+deprecated = element deprecated { text }
+since = element since { text }
+
+internal = element internal { text }

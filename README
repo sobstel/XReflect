@@ -1,0 +1,10 @@
+XReflect
+
+Object Oriented PHP Reflection to XML (generator)
+
+It creates XML file following XPHPDoc schema. It uses 
+Reflection API to read all info about individual elements 
+(classes, interfaces, methods, properties) and additionaly 
+parses all doc comments.
+
+Project fully suspended right now.
